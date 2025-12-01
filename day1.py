@@ -10,12 +10,18 @@ def rotate(start, dir, n):
 
 
 def rotate2(start, dir, n):
-    zero_clicks = 0
-
     if dir == "R":
-        return (start + n) % 100
+        zero_clicks = (start + n) // 100
+        newpos = (start + n) % 100
     else:
-        return (start - n) % 100
+        if start == 0:
+            start = 100
+        zero_clicks = abs((start - n) // 100)
+        newpos = (start - n) % 100
+        if newpos == 0:
+            zero_clicks += 1
+
+    return (newpos, zero_clicks)
 
 
 if __name__ == "__main__":
@@ -38,9 +44,12 @@ if __name__ == "__main__":
     print(max(pos_dict.values()))
 
     print("Part 2:")
-    pos0 = 50
+    pos = 50
     zero_clicks = 0
     for line in lines:
         dir = line[0]
         n = int(line[1:])
-        pos1 = rotate(pos, dir, n)
+        pos, zc = rotate2(pos, dir, n)
+        zero_clicks += zc
+        print(dir, n, pos, zc)
+    print(zero_clicks)

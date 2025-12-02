@@ -25,6 +25,8 @@ def check_fake2(id):
             subid = id[:i]
             if subid * int(id_len / i) == id:
                 return True
+            elif id_len % 2 != 0:
+                return False
             else:
                 i += 1
         else:

@@ -27,3 +27,19 @@ if __name__ == "__main__":
                     accessible += 1
 
     print(accessible)
+
+    # part 2
+
+    accessible = 0
+    removed = 1
+    while removed != 0:
+        removed = 0
+        for i in range(len(rolls)):
+            for j in range(len(rolls[0])):
+                if rolls[i][j] == "@":
+                    if search(i, j, rolls):
+                        accessible += 1
+                        rolls[i] = rolls[i][:j] + "." + rolls[i][j + 1 :]
+                        removed += 1
+
+    print(accessible)

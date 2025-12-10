@@ -22,3 +22,8 @@ if __name__ == "__main__":
     print(sum(solutions))
 
     # part 2
+    with open("data/day6.txt") as f:
+        problems = f.read().strip().split("\n")
+
+    for i in range(len(problems[0])):
+        ...

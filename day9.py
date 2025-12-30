@@ -20,3 +20,7 @@ if __name__ == "__main__":
                 areas.append(area_ij)
 
     print(max(areas))
+
+    # part 2
+    dim_x = max(int(a[0]) for a in tiles) + 1
+    dim_y = max(int(a[1]) for a in tiles) + 1

@@ -35,13 +35,59 @@ if __name__ == "__main__":
             if not _check_dict(i, j):
                 dist_matrix[(i, j)] = _distance(coords[i], coords[j])
 
+    # part 1
+    dist_1 = dist_matrix.copy()
+
     connections = 0
     group = 0
     connect_dict = {}
     while connections < 1000:
 
-        idx1, idx2 = min(dist_matrix, key=dist_matrix.get)
-        del dist_matrix[(idx1, idx2)]
+        idx1, idx2 = min(dist_1, key=dist_1.get)
+        del dist_1[(idx1, idx2)]
+
+        if idx1 in connect_dict and idx2 in connect_dict:
+            if connect_dict[idx1] != connect_dict[idx2]:
+                c2 = connect_dict[idx2]
+                connect_dict[idx2] = connect_dict[idx1]
+                for k, v in connect_dict.items():
+                    if v == c2:
+                        connect_dict[k] = connect_dict[idx1]
+
+        elif idx1 in connect_dict:
+            connect_dict[idx2] = connect_dict[idx1]
+        elif idx2 in connect_dict:
+            connect_dict[idx1] = connect_dict[idx2]
+        else:
+            group += 1
+            connect_dict[idx1] = group
+            connect_dict[idx2] = group
+        connections += 1
+
+    group_dict = {}
+
+    for k, v in connect_dict.items():
+        if v not in group_dict:
+            group_dict[v] = 1
+        else:
+            group_dict[v] += 1
+
+    highest = sorted(group_dict.values(), reverse=True)[:3]
+
+    out1 = highest[0] * highest[1] * highest[2]
+    print(out1)
+
+    # part 2
+    dist_2 = dist_matrix.copy()
+
+    connections = 0
+    group = 0
+    connect_dict = {}
+
+    while len(set(connect_dict.values())) > 1:
+
+        idx1, idx2 = min(dist_2, key=dist_2.get)
+        del dist_2[(idx1, idx2)]
 
         if idx1 in connect_dict and idx2 in connect_dict:
             if connect_dict[idx1] != connect_dict[idx2]:
